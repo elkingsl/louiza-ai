@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Louiza AI</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" />
+  <style>
+    body {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      background-color: var(--md-background);
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 22rem;
+      background-color: var(--md-surface-container-low);
+      border-radius: var(--md-shape-xl);
+      padding: 2rem 1.5rem;
+      animation: slide-up 0.4s var(--md-easing) both;
+    }
+
+    @keyframes slide-up {
+      from { opacity: 0; transform: translateY(1.5rem); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .auth-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .auth-logo-icon {
+      width: 3.5rem;
+      height: 3.5rem;
+      border-radius: var(--md-shape-lg);
+      background-color: var(--md-primary-container);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--md-on-primary-container);
+      font-size: 1.75rem;
+    }
+
+    .auth-logo h1 {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--md-on-surface);
+    }
+
+    .auth-logo p {
+      font-size: 0.875rem;
+      color: var(--md-on-surface-variant);
+      text-align: center;
+    }
+
+    .tabs {
+      display: flex;
+      background-color: var(--md-surface-container-highest);
+      border-radius: var(--md-shape-full);
+      padding: 0.25rem;
+      margin-bottom: 1.75rem;
+      gap: 0.25rem;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 0.5rem;
+      border-radius: var(--md-shape-full);
+      border: none;
+      background: transparent;
+      font-family: var(--md-font);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--md-on-surface-variant);
+      cursor: pointer;
+      transition:
+        background-color var(--md-duration-short) var(--md-easing),
+        color var(--md-duration-short) var(--md-easing);
+    }
+
+    .tab.active {
+      background-color: var(--md-surface-container-low);
+      color: var(--md-on-surface);
+    }
+
+    .form-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .field {
+      position: relative;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 1rem 1rem 0.5rem;
+      background-color: var(--md-surface-container-highest);
+      border: none;
+      border-bottom: 1px solid var(--md-outline);
+      border-radius: var(--md-shape-xs) var(--md-shape-xs) 0 0;
+      font-family: var(--md-font);
+      font-size: 1rem;
+      color: var(--md-on-surface);
+      outline: none;
+      transition:
+        border-color var(--md-duration-short) var(--md-easing),
+        background-color var(--md-duration-short) var(--md-easing);
+    }
+
+    .field input:focus {
+      border-bottom: 2px solid var(--md-primary);
+      background-color: var(--md-surface-container-high);
+    }
+
+    .field label {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1rem;
+      color: var(--md-on-surface-variant);
+      pointer-events: none;
+      transition:
+        top var(--md-duration-short) var(--md-easing),
+        font-size var(--md-duration-short) var(--md-easing),
+        color var(--md-duration-short) var(--md-easing);
+    }
+
+    .field input:focus ~ label,
+    .field input:not(:placeholder-shown) ~ label {
+      top: 0.4rem;
+      font-size: 0.75rem;
+      color: var(--md-primary);
+    }
+
+    .field input::placeholder { color: transparent; }
+
+    .field-error-msg {
+      font-size: 0.75rem;
+      color: var(--md-error);
+      margin-top: 0.25rem;
+      padding-left: 1rem;
+      display: none;
+    }
+
+    .field.has-error input { border-bottom-color: var(--md-error); }
+    .field.has-error label { color: var(--md-error); }
+    .field.has-error .field-error-msg { display: block; }
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .password-wrapper input { padding-right: 3rem; }
+
+    .password-toggle {
+      position: absolute;
+      right: 0.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--md-on-surface-variant);
+      cursor: pointer;
+      padding: 0.25rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .auth-error {
+      background-color: var(--md-error-container);
+      color: var(--md-on-error-container);
+      border-radius: var(--md-shape-sm);
+      padding: 0.75rem 1rem;
+      font-size: 0.875rem;
+      display: none;
+      margin-top: 0.5rem;
+    }
+
+    .auth-error.show { display: block; }
+
+    .btn-submit {
+      width: 100%;
+      margin-top: 0.75rem;
+      height: 3rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .btn-submit .spinner { display: none; }
+    .btn-submit.loading .btn-label { display: none; }
+    .btn-submit.loading .spinner { display: block; }
+
+    .theme-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+    }
+
+    /* Hidden panel */
+    .form-panel { display: none; }
+    .form-panel.active { display: flex; flex-direction: column; gap: 1rem; }
+  </style>
+</head>
+<body>
+  <button class="btn btn-icon theme-toggle" onclick="Theme.toggle()" aria-label="Toggle theme">
+    <span class="material-icons-round" id="theme-icon">dark_mode</span>
+  </button>
+
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="auth-logo-icon">
+        <span class="material-icons-round">auto_awesome</span>
+      </div>
+      <h1>Louiza AI</h1>
+      <p>Your personal AI assistant</p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs" role="tablist">
+      <button class="tab active" id="tab-login" role="tab" onclick="switchTab('login')">Sign In</button>
+      <button class="tab" id="tab-register" role="tab" onclick="switchTab('register')">Sign Up</button>
+    </div>
+
+    <!-- Login form -->
+    <div class="form-panel active" id="panel-login">
+      <div class="form-fields">
+        <div class="field" id="field-login-username">
+          <input type="text" id="login-username" placeholder="Username" autocomplete="username" />
+          <label for="login-username">Username</label>
+          <span class="field-error-msg"></span>
+        </div>
+        <div class="field" id="field-login-password">
+          <div class="password-wrapper">
+            <input type="password" id="login-password" placeholder="Password" autocomplete="current-password" />
+            <button class="password-toggle" onclick="togglePassword('login-password', this)" type="button" aria-label="Toggle password">
+              <span class="material-icons-round" style="font-size:1.25rem">visibility</span>
+            </button>
+          </div>
+          <label for="login-password">Password</label>
+          <span class="field-error-msg"></span>
+        </div>
+      </div>
+      <div class="auth-error" id="login-error"></div>
+      <button class="btn btn-filled btn-submit" id="btn-login" onclick="handleLogin()">
+        <span class="btn-label">Sign In</span>
+        <div class="spinner"></div>
+      </button>
+    </div>
+
+    <!-- Register form -->
+    <div class="form-panel" id="panel-register">
+      <div class="form-fields">
+        <div class="field" id="field-reg-username">
+          <input type="text" id="reg-username" placeholder="Username" autocomplete="username" />
+          <label for="reg-username">Username</label>
+          <span class="field-error-msg"></span>
+        </div>
+        <div class="field" id="field-reg-email">
+          <input type="email" id="reg-email" placeholder="Email (optional)" autocomplete="email" />
+          <label for="reg-email">Email (optional)</label>
+          <span class="field-error-msg"></span>
+        </div>
+        <div class="field" id="field-reg-password">
+          <div class="password-wrapper">
+            <input type="password" id="reg-password" placeholder="Password" autocomplete="new-password" />
+            <button class="password-toggle" onclick="togglePassword('reg-password', this)" type="button" aria-label="Toggle password">
+              <span class="material-icons-round" style="font-size:1.25rem">visibility</span>
+            </button>
+          </div>
+          <label for="reg-password">Password</label>
+          <span class="field-error-msg"></span>
+        </div>
+        <div class="field" id="field-reg-confirm">
+          <div class="password-wrapper">
+            <input type="password" id="reg-confirm" placeholder="Confirm Password" autocomplete="new-password" />
+            <button class="password-toggle" onclick="togglePassword('reg-confirm', this)" type="button" aria-label="Toggle password">
+              <span class="material-icons-round" style="font-size:1.25rem">visibility</span>
+            </button>
+          </div>
+          <label for="reg-confirm">Confirm Password</label>
+          <span class="field-error-msg"></span>
+        </div>
+      </div>
+      <div class="auth-error" id="register-error"></div>
+      <button class="btn btn-filled btn-submit" id="btn-register" onclick="handleRegister()">
+        <span class="btn-label">Create Account</span>
+        <div class="spinner"></div>
+      </button>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/theme.js"></script>
+  <script>
+    // Redirect if already logged in
+    Auth.requireGuest();
+    Theme.init();
+
+    // Sync theme icon
+    function syncThemeIcon() {
+      document.getElementById("theme-icon").textContent = Theme.isDark() ? "light_mode" : "dark_mode";
+    }
+    syncThemeIcon();
+    const origToggle = Theme.toggle.bind(Theme);
+    Theme.toggle = async () => { await origToggle(); syncThemeIcon(); };
+
+    // Tab switching
+    function switchTab(tab) {
+      document.getElementById("panel-login").classList.toggle("active", tab === "login");
+      document.getElementById("panel-register").classList.toggle("active", tab === "register");
+      document.getElementById("tab-login").classList.toggle("active", tab === "login");
+      document.getElementById("tab-register").classList.toggle("active", tab === "register");
+      clearErrors();
+    }
+
+    function clearErrors() {
+      ["login-error", "register-error"].forEach(id => {
+        const el = document.getElementById(id);
+        el.textContent = "";
+        el.classList.remove("show");
+      });
+      document.querySelectorAll(".field").forEach(f => f.classList.remove("has-error"));
+    }
+
+    function showError(containerId, message) {
+      const el = document.getElementById(containerId);
+      el.textContent = message;
+      el.classList.add("show");
+    }
+
+    function setLoading(btnId, loading) {
+      document.getElementById(btnId).classList.toggle("loading", loading);
+      document.getElementById(btnId).disabled = loading;
+    }
+
+    function togglePassword(inputId, btn) {
+      const input = document.getElementById(inputId);
+      const icon = btn.querySelector(".material-icons-round");
+      if (input.type === "password") {
+        input.type = "text";
+        icon.textContent = "visibility_off";
+      } else {
+        input.type = "password";
+        icon.textContent = "visibility";
+      }
+    }
+
+    async function handleLogin() {
+      clearErrors();
+      const username = document.getElementById("login-username").value;
+      const password = document.getElementById("login-password").value;
+      setLoading("btn-login", true);
+      try {
+        await Auth.login(username, password);
+        window.location.href = "chat.html";
+      } catch (e) {
+        showError("login-error", e.message);
+        setLoading("btn-login", false);
+      }
+    }
+
+    async function handleRegister() {
+      clearErrors();
+      const username = document.getElementById("reg-username").value;
+      const email = document.getElementById("reg-email").value;
+      const password = document.getElementById("reg-password").value;
+      const confirm = document.getElementById("reg-confirm").value;
+
+      if (password !== confirm) {
+        showError("register-error", "Passwords do not match.");
+        return;
+      }
+
+      setLoading("btn-register", true);
+      try {
+        await Auth.register(username, password, email);
+        window.location.href = "chat.html";
+      } catch (e) {
+        showError("register-error", e.message);
+        setLoading("btn-register", false);
+      }
+    }
+
+    // Allow Enter key to submit
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter") return;
+      const panel = document.querySelector(".form-panel.active").id;
+      if (panel === "panel-login") handleLogin();
+      else handleRegister();
+    });
+  </script>
+</body>
+</html>
