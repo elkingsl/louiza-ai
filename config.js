@@ -5,7 +5,7 @@
 
 const CONFIG = {
   // Your Cloudflare Worker URL — update after deploying worker.js
-  WORKER_URL: "https://louiza-worker.YOUR_SUBDOMAIN.workers.dev",
+  WORKER_URL: "https://louiza-worker.amkaslam11.workers.dev",
 
   // Default AI model (user can change in settings)
   DEFAULT_MODEL: "mistralai/mistral-7b-instruct:free",
