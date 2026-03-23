@@ -18,16 +18,16 @@ const Auth = (() => {
 
   // ── Session ────────────────────────────────────────────────
   function getSession() {
-    const raw = sessionStorage.getItem(SESSION_KEY);
+    const raw = localStorage.getItem(SESSION_KEY);
     return raw ? JSON.parse(raw) : null;
   }
 
   function setSession(profile) {
-    sessionStorage.setItem(SESSION_KEY, JSON.stringify(profile));
+    localStorage.setItem(SESSION_KEY, JSON.stringify(profile));
   }
 
   function clearSession() {
-    sessionStorage.removeItem(SESSION_KEY);
+    localStorage.removeItem(SESSION_KEY);
   }
 
   function isLoggedIn() {
@@ -36,13 +36,13 @@ const Auth = (() => {
 
   function requireAuth() {
     if (!isLoggedIn()) {
-      window.location.href = "index.html";
+      window.location.replace("/index.html");
     }
   }
 
   function requireGuest() {
     if (isLoggedIn()) {
-      window.location.href = "chat.html";
+      window.location.replace("/chat.html");
     }
   }
 
@@ -79,7 +79,7 @@ const Auth = (() => {
   // ── Logout ─────────────────────────────────────────────────
   function logout() {
     clearSession();
-    window.location.href = "index.html";
+    window.location.replace("/index.html");
   }
 
   // ── Public API ─────────────────────────────────────────────

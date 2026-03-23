@@ -367,7 +367,7 @@
       setLoading("btn-login", true);
       try {
         await Auth.login(username, password);
-        window.location.href = "chat.html";
+        window.location.replace("/chat.html");
       } catch (e) {
         showError("login-error", e.message);
         setLoading("btn-login", false);
@@ -389,7 +389,7 @@
       setLoading("btn-register", true);
       try {
         await Auth.register(username, password, email);
-        window.location.href = "chat.html";
+        window.location.replace("/chat.html");
       } catch (e) {
         showError("register-error", e.message);
         setLoading("btn-register", false);
