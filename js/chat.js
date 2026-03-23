@@ -16,7 +16,8 @@ const Chat = (() => {
     try {
       const settings = await DB.getSettings(session.username);
       const model = settings?.model || CONFIG.DEFAULT_MODEL;
-      document.getElementById("model-select").value = model;
+      const sel = document.getElementById("model-select");
+      if (sel) sel.value = model;
     } catch (_) {}
 
     // Load chat history
