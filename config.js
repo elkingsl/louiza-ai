@@ -1,3 +1,4 @@
+console.log("config loaded");
 // ============================================================
 //  Louiza AI — Public Config
 //  No secrets here. All keys live in the Cloudflare Worker.
