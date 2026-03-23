@@ -15,11 +15,20 @@ const DB = (() => {
     };
     if (body) opts.body = JSON.stringify(body);
 
-    const res = await fetch(`${base()}${endpoint}`, opts);
-    const data = await res.json();
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+    opts.signal = controller.signal;
 
-    if (!res.ok) throw new Error(data.error || "Request failed");
-    return data;
+    try {
+      const res = await fetch(`${base()}${endpoint}`, opts);
+      clearTimeout(timeout);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Request failed");
+      return data;
+    } catch (e) {
+      clearTimeout(timeout);
+      throw e;
+    }
   }
 
   // ── Auth ───────────────────────────────────────────────────

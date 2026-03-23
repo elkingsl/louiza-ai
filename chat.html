@@ -421,17 +421,9 @@
       } catch (_) {}
     }
 
-    // Init chat
-    Chat.init().then(() => {
-      const msgs = document.getElementById("messages");
-      if (msgs.children.length === 0) Chat.renderWelcome();
-    }).catch(e => {
-      console.error(e);
-      Chat.renderWelcome();
-    }).finally(() => {
-      document.getElementById("chat-input").disabled = false;
-      document.getElementById("btn-send").disabled = false;
-    });
+    // Init chat — fire and forget, never blocks input
+    Chat.renderWelcome();
+    Chat.init();
 
     // Enter to send (Shift+Enter for newline)
     function handleKey(e) {

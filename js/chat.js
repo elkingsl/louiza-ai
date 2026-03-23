@@ -12,25 +12,26 @@ const Chat = (() => {
     const session = Auth.getSession();
     if (!session) return;
 
-    // Load settings for model preference
-    try {
-      const settings = await DB.getSettings(session.username);
+    // Load settings for model preference (non-blocking)
+    DB.getSettings(session.username).then(settings => {
       const model = settings?.model || CONFIG.DEFAULT_MODEL;
       const sel = document.getElementById("model-select");
       if (sel) sel.value = model;
-    } catch (_) {}
+    }).catch(() => {});
 
-    // Load chat history
-    try {
-      const history = await DB.readFile(session.username, "chat_history");
+    // Load chat history (non-blocking)
+    DB.readFile(session.username, "chat_history").then(history => {
       if (Array.isArray(history) && history.length > 0) {
         messages = history.map(({ role, content }) => ({ role, content }));
         history.forEach(({ role, content, timestamp }) => {
           renderMessage(role === "assistant" ? "louiza" : "user", content, timestamp, false);
         });
+        // Remove welcome if it was added before history loaded
+        const welcome = document.getElementById("messages").querySelector(".welcome-msg");
+        if (welcome) welcome.remove();
         scrollToBottom();
       }
-    } catch (_) {}
+    }).catch(() => {});
   }
 
   // ── Send message ───────────────────────────────────────────
