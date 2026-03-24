@@ -5,17 +5,18 @@
 
 const CONFIG = {
   // Your Cloudflare Worker URL — update after deploying worker.js
-  WORKER_URL: "https://louiza-worker.YOUR_SUBDOMAIN.workers.dev",
+  WORKER_URL: "https://louiza-ai.vercel.app",
 
-  // Default AI model (user can change in settings)
-  DEFAULT_MODEL: "mistralai/mistral-7b-instruct",
+  // Default AI model
+  DEFAULT_MODEL: "openrouter/free",
 
   // Available models (free tier on OpenRouter)
   MODELS: [
-    { id: "mistralai/mistral-7b-instruct", label: "Mistral 7B" },
-    { id: "meta-llama/llama-3.1-8b-instruct", label: "Llama 3.1 8B" },
-    { id: "google/gemma-2-9b-it", label: "Gemma 2 9B" },
-    { id: "qwen/qwen-2.5-7b-instruct", label: "Qwen 2.5 7B" },
+    { id: "openrouter/free", label: "Auto" },
+    { id: "meta-llama/llama-3.3-70b-instruct:free", label: "Llama 3.3" },
+    { id: "google/gemma-3-27b-it:free", label: "Gemma 3" },
+    { id: "mistralai/mistral-small-3.1-24b-instruct:free", label: "Mistral Small 3.1" },
+    { id: "qwen/qwen3-14b:free", label: "Qwen 3" },
   ],
 
   // App info
