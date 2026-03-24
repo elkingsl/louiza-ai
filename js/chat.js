@@ -114,6 +114,10 @@ const Chat = (() => {
     const welcome = container.querySelector(".welcome-msg");
     if (welcome) welcome.remove();
 
+    // Show clear button
+    const btnClear = document.getElementById("btn-clear");
+    if (btnClear) btnClear.style.display = "";
+
     const isUser = sender === "user";
     const time = timestamp ? formatTime(timestamp) : "";
 

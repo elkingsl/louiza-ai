@@ -549,9 +549,13 @@ body {
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
+  pointer-events: none;
 }
 
-.dialog-scrim.open { opacity: 1; }
+.dialog-scrim.open {
+  opacity: 1;
+  pointer-events: all;
+}
 
 .dialog {
   background-color: var(--md-surface-container-high);
