@@ -1,22 +1,17 @@
 // ============================================================
 //  Louiza AI — Public Config
-//  No secrets here. All keys live in the Cloudflare Worker.
+//  No secrets here. All keys live in Vercel environment variables.
 // ============================================================
 
 const CONFIG = {
-  // Your Cloudflare Worker URL — update after deploying worker.js
+  // Your Vercel deployment URL
   WORKER_URL: "https://louiza-ai.vercel.app",
 
-  // Default AI model
-  DEFAULT_MODEL: "openrouter/free",
+  // Fixed to auto — always picks best available free model
+  DEFAULT_MODEL: "openrouter/auto",
 
-  // Available models (free tier on OpenRouter)
   MODELS: [
-    { id: "openrouter/free", label: "Auto" },
-    { id: "meta-llama/llama-3.3-70b-instruct:free", label: "Llama 3.3" },
-    { id: "google/gemma-3-27b-it:free", label: "Gemma 3" },
-    { id: "mistralai/mistral-small-3.1-24b-instruct:free", label: "Mistral Small 3.1" },
-    { id: "qwen/qwen3-14b:free", label: "Qwen 3" },
+    { id: "openrouter/auto", label: "Auto" },
   ],
 
   // App info

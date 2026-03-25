@@ -322,9 +322,10 @@
       <span class="material-icons-round" style="font-size:1rem">auto_awesome</span>
     </div>
     <span class="top-bar-title">Louiza AI</span>
-    <select class="model-select" id="model-select" onchange="saveModelPref()" title="Select model">
-      <!-- Populated by JS -->
+    <select class="model-select" id="model-select" onchange="saveModelPref()" title="Select model" style="display:none">
+      <!-- Fixed to auto -->
     </select>
+    <span style="font-size:0.75rem;color:var(--md-on-surface-variant);padding:0.25rem 0.75rem;background:var(--md-surface-container-highest);border-radius:var(--md-shape-full)">Auto</span>
     <button class="btn btn-icon" onclick="Theme.toggle()" aria-label="Toggle theme" title="Toggle theme">
       <span class="material-icons-round" id="theme-icon">light_mode</span>
     </button>
